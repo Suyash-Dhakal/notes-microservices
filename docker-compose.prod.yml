@@ -1,0 +1,33 @@
+services:
+  redis:
+    image: redis:7-alpine
+
+  auth-service:
+    build: ./auth-service
+    env_file:
+      - ./auth-service/.env
+
+  notes-service:
+    build: ./notes-service
+    env_file:
+      - ./notes-service/.env
+
+  api-gateway:
+    build: ./api-gateway
+    env_file:
+      - ./api-gateway/.env
+    depends_on:
+      - auth-service
+      - notes-service
+      - redis
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api-gateway
+

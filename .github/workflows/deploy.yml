@@ -28,8 +28,7 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: |
-            suyashdhakal1/notes-app:${{ github.ref_name//\//- }}
+          tags: suyashdhakal1/notes-app:${{ github.ref_name//\//- }}
 
       - name: Deploy on VM
         uses: appleboy/ssh-action@v1
